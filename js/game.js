@@ -1,4 +1,4 @@
-var canvas = document.getElementById('myCanvas');
+var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var pong = {};
 
@@ -8,7 +8,7 @@ var pong = {};
 function Paddle(name) {
     this.x = 0;
     this.y = 0;
-    this.width = 30;
+    this.width = 20;
     this.height = 100;
     this.name = name;
     this.offset = 3;
@@ -40,6 +40,17 @@ function setPositions() {
     pong.players[1].y = (canvas.height - pong.players[1].height)/2;
 }
 
+function isBallPaddleColliding(paddle,ball){
+    let dx = Math.abs(ball.x - (paddle.x + paddle.width / 2));
+    let dy = Math.abs(ball.y - (paddle.y + paddle.height / 2));
+    if( dx > ball.radius+paddle.width/2 ){ return(false); }
+    if( dy > ball.radius+paddle.height/2 ){ return(false); }
+    if( dx <= paddle.width ){ return(true); }
+    if( dy <= paddle.height ){ return(true); }
+    dx = dx - paddle.width;
+    dy = dy - paddle.height;
+    return(dx*dx+dy*dy<=ball.radius*ball.radius);
+}
 
 
 function keyDownHandler(e) {
@@ -86,6 +97,7 @@ document.addEventListener("keyup", keyUpHandler);
 function draw() {
     pong.players[0].draw();
     pong.players[1].draw();
+    drawBall();
 }
 
 function moveElements() {
@@ -97,8 +109,16 @@ function moveElements() {
         if (pong.players[i].keyDown && pong.players[i].y + pong.players[i].height < canvas.height) {
             pong.players[i].y += pong.players[i].offset;
         }
+        if (isBallPaddleColliding(pong.players[i], ball)) {
+            ball.vx = -ball.vx;
+            if (pong.players[i].keyUp) {
+                ball.offsetY += 400; }
+            if (pong.players[i].keyDown) {
+                ball.offsetY -= 400; }
+        }
 
     }
+
 }
 
 
@@ -114,7 +134,7 @@ function play() {
 
 
 initGame();
-play();
+// play();
 
 
 
