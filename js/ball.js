@@ -5,7 +5,7 @@ var raf;
 
 function generateVelocity() {
     var vx = 0;
-    while (vx < 5 && vx > -5) {
+    while (vx < 1 && vx > -1) {
         vx = Math.floor(Math.random() * (20) - 10);
     }
     return vx;
@@ -35,9 +35,5 @@ function drawBall() {
 
     if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
         ball.vy = -ball.vy;
-    }
-    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-
-        ball.vx = -ball.vx;
     }
 }
