@@ -1,4 +1,4 @@
-var canvas = document.getElementById('myCanvas');
+var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var pong = {};
 
@@ -86,6 +86,7 @@ document.addEventListener("keyup", keyUpHandler);
 function draw() {
     pong.players[0].draw();
     pong.players[1].draw();
+    drawBall();
 }
 
 function moveElements() {
@@ -114,7 +115,7 @@ function play() {
 
 
 initGame();
-play();
+// play();
 
 
 

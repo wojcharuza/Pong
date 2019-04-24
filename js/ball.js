@@ -13,18 +13,15 @@ var ball = {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         ctx.closePath();
-
         ctx.fillStyle = this.color;
         ctx.fill();
     }
 };
 
-function draw() {
-    ctx.clearRect(0,0, canvas.width, canvas.height);
+function drawBall() {
     ball.draw();
     ball.x += ball.vx;
     ball.y += ball.vy;
-    raf = window.requestAnimationFrame(draw);
 
 
     if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
@@ -32,6 +29,6 @@ function draw() {
     }
     if (ball.x + ball.radius > canvas.width || ball.x + ball.radius < 0) {
 
-        //ball.vx = -ball.vx;
+        ball.vx = -ball.vx;
     }
 }
