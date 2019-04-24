@@ -8,8 +8,8 @@ var pong = {};
 function Paddle(name) {
     this.x = 0;
     this.y = 0;
-    this.width = 5;
-    this.height = 30;
+    this.width = 30;
+    this.height = 100;
     this.name = name;
     this.offset = 3;
     this.keyUp = false;
