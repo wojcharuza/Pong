@@ -2,11 +2,20 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var raf;
 
+
+function generateVelocity() {
+    var vx = 0;
+    while (vx < 5 && vx > -5) {
+        vx = Math.floor(Math.random() * (20) - 10);
+    }
+    return vx;
+}
+
 var ball = {
-    x: 100,
-    y: 100,
-    vx: 5,
-    vy: 2,
+    x: canvas.width/2,
+    y: canvas.height/2,
+    vx: generateVelocity(),
+    vy: generateVelocity(),
     radius: 25,
     color: 'blue',
     draw: function() {
@@ -27,7 +36,7 @@ function drawBall() {
     if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
         ball.vy = -ball.vy;
     }
-    if (ball.x + ball.radius > canvas.width || ball.x + ball.radius < 0) {
+    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
 
         ball.vx = -ball.vx;
     }
