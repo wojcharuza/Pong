@@ -37,6 +37,6 @@ function drawBall() {
         ball.vy = -ball.vy;
     }
     if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-        ball.vx = -ball.vx;
+       
     }
 }
