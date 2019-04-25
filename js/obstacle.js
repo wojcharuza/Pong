@@ -11,13 +11,12 @@ function generateVelocity() {
     return vx;
 }
 
-var ball = {
+var obstacle = {
     x: canvas.width/2,
-    y: canvas.height/2,
-    vx: 2,
-    vy: 2,
-    radius: 10,
-    color: 'blue',
+    y: canvas.height/9,
+    vy: generateVelocity(),
+    radius: 60,
+    color: 'yellow',
     draw: function() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
@@ -27,16 +26,13 @@ var ball = {
     }
 };
 
-function drawBall() {
-    ball.draw();
-    ball.x += ball.vx;
-    ball.y += ball.vy;
+function drawObstacle() {
+    obstacle.draw();
+    obstacle.y += obstacle.vy;
 
 
-    if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
-        ball.vy = -ball.vy;
+    if (obstacle.y + obstacle.radius > canvas.height || obstacle.y - obstacle.radius < 0) {
+        obstacle.vy = -obstacle.vy;
     }
-    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-        ball.vx = -ball.vx;
-    }
+
 }
