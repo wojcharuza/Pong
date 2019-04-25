@@ -135,6 +135,7 @@ function moveElements() {
     }
         if (isBallObstacleColliding(ball, obstacle)) {
             ball.vy = -ball.vy;
+            ball.vx = -ball.vx;
 
         }
 }
@@ -169,6 +170,66 @@ function play() {
     requestAnimationFrame(play);
 }
 
+function rotate(x, y, sin, cos, reverse) {
+    return {
+        x: (reverse) ? (x * cos + y * sin) : (x * cos - y * sin),
+        y: (reverse) ? (y * cos - x * sin) : (y * cos + x * sin)
+    };
+}
+
+function checkCollision (ball0, ball1) {
+    var dx = ball1.x - ball0.x,
+        dy = ball1.y - ball0.y,
+        dist = Math.sqrt(dx * dx + dy * dy);
+
+    //collision handling code here
+    if (dist < ball0.radius + ball1.radius) {
+        //calculate angle, sine, and cosine
+        var angle = Math.atan2(dy, dx),
+            sin = Math.sin(angle),
+            cos = Math.cos(angle),
+
+            //rotate ball0's position
+            pos0 = {x: 0, y: 0}, //point
+
+            //rotate ball1's position
+            pos1 = rotate(dx, dy, sin, cos, true),
+
+            //rotate ball0's velocity
+            vel0 = rotate(ball0.vx, ball0.vy, sin, cos, true),
+
+            //rotate ball1's velocity
+            vel1 = rotate(ball1.vx, ball1.vy, sin, cos, true),
+
+            //collision reaction
+            vxTotal = vel0.x – vel1.x;
+        vel0.x = ((ball0.mass - ball1.mass) * vel0.x + 2 * ball1.mass * vel1.x) /
+            (ball0.mass + ball1.mass);
+        vel1.x = vxTotal + vel0.x;
+
+        //update position
+        pos0.x += vel0.x;
+        pos1.x += vel1.x;
+
+        //rotate positions back
+        var pos0F = rotate(pos0.x, pos0.y, sin, cos, false),
+            pos1F = rotate(pos1.x, pos1.y, sin, cos, false);
+
+        //adjust positions to actual screen positions
+        ball1.x = ball0.x + pos1F.x;
+        ball1.y = ball0.y + pos1F.y;
+        ball0.x = ball0.x + pos0F.x;
+        ball0.y = ball0.y + pos0F.y;
+
+        //rotate velocities back
+        var vel0F = rotate(vel0.x, vel0.y, sin, cos, false),
+            vel1F = rotate(vel1.x, vel1.y, sin, cos, false);
+        ball0.vx = vel0F.x;
+        ball0.vy = vel0F.y;
+        ball1.vx = vel1F.x;
+        ball1.vy = vel1F.y;
+    }
+}
 
 
 
