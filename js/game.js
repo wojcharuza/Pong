@@ -137,11 +137,27 @@ function moveElements() {
 function calculateScore() {
     if (ball.x + ball.radius < 0) {
         pong.players[1].score++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        alert("Player 2 win !");
+        wait(1000);
         setPositions();
+
     }
     if (ball.x - ball.radius > canvas.width) {
         pong.players[0].score++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        alert("Player 1 win !");
+        wait(1000);
         setPositions();
+
+    }
+
+}
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
     }
 }
 
