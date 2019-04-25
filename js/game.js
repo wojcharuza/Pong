@@ -1,9 +1,3 @@
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
-var pong = {};
-
-
-
 
 function Paddle(name) {
     this.x = 0;
@@ -12,13 +6,13 @@ function Paddle(name) {
     this.height = 100;
     this.name = name;
     this.score = 0;
-    this.offset = 7;
+    this.offset = 10;
     this.keyUp = false;
     this.keyDown = false;
     this.draw = function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "white";
         ctx.fill();
         ctx.closePath();
     }
@@ -152,7 +146,7 @@ function calculateScore() {
 }
 
 function displayScore() {
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "white";
     ctx.font = "25px Courier New";
     ctx.textAlign = "left";
     ctx.fillText(pong.players[0].name + " : " + pong.players[0].score, 100, 100);

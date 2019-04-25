@@ -1,6 +1,3 @@
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
-var raf;
 
 
 function generateVelocity() {
@@ -17,7 +14,7 @@ var ball = {
     vx: 2,
     vy: 2,
     radius: 10,
-    color: 'blue',
+    color: 'red',
     draw: function() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
