@@ -11,7 +11,7 @@ function Paddle(name) {
     this.width = 20;
     this.height = 100;
     this.name = name;
-    this.offset = 3;
+    this.offset = 7;
     this.keyUp = false;
     this.keyDown = false;
     this.draw = function() {
@@ -112,9 +112,9 @@ function moveElements() {
         if (isBallPaddleColliding(pong.players[i], ball)) {
             ball.vx = -ball.vx;
             if (pong.players[i].keyUp) {
-                ball.offsetY += 400; }
+                ball.vy--; }
             if (pong.players[i].keyDown) {
-                ball.offsetY -= 400; }
+                ball.vy++; }
         }
 
     }

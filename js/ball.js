@@ -5,20 +5,18 @@ var raf;
 
 function generateVelocity() {
     var vx = 0;
-    while (vx < 1 && vx > -1) {
+    while (vx < 3 && vx > -3) {
         vx = Math.floor(Math.random() * (20) - 10);
     }
     return vx;
 }
 
 var ball = {
-
-    offsetY: 0,
     x: canvas.width/2,
     y: canvas.height/2,
     vx: generateVelocity(),
     vy: generateVelocity(),
-    radius: 25,
+    radius: 10,
     color: 'blue',
     draw: function() {
         ctx.beginPath();
@@ -40,6 +38,5 @@ function drawBall() {
     }
     if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
 
-        console.log("koniec");
     }
 }
