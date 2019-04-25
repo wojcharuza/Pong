@@ -11,6 +11,7 @@ function Paddle(name) {
     this.width = 20;
     this.height = 100;
     this.name = name;
+    this.score = 0;
     this.offset = 7;
     this.keyUp = false;
     this.keyDown = false;
@@ -38,6 +39,10 @@ function setPositions() {
     pong.players[1].x = canvas.width - pong.players[1].width;
     pong.players[0].y = (canvas.height - pong.players[0].height)/2;
     pong.players[1].y = (canvas.height - pong.players[1].height)/2;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.vy = generateVelocity();
+    ball.vx = generateVelocity();
 }
 
 function isBallPaddleColliding(paddle,ball){
@@ -121,11 +126,33 @@ function moveElements() {
 
 }
 
+function calculateScore() {
+    if (ball.x + ball.radius < 0) {
+        pong.players[1].score++;
+        setPositions();
+    }
+    if (ball.x - ball.radius > canvas.width) {
+        pong.players[0].score++;
+        setPositions();
+    }
+}
+
+function displayScore() {
+    ctx.fillStyle = "#000000";
+    ctx.font = "25px Courier New";
+    ctx.textAlign = "left";
+    ctx.fillText(pong.players[0].name + " : " + pong.players[0].score, 100, 100);
+    ctx.textAlign = "right";
+    ctx.fillText(pong.players[1].name + " : " + pong.players[1].score, canvas.width - 100, 100);
+}
+
 
 function play() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw();
     moveElements();
+    calculateScore();
+    displayScore();
     requestAnimationFrame(play);
 }
 
