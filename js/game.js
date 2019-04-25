@@ -9,6 +9,7 @@ function Paddle(name) {
     this.offset = 10;
     this.keyUp = false;
     this.keyDown = false;
+    this.pause = false;
     this.draw = function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
@@ -75,6 +76,8 @@ function keyDownHandler(e) {
 
     else if (e.key == 'm') {
         pong.players[1].keyDown = true;
+    } else if (e.key === ' ') {
+        pong.pause = !pong.pause;
     }
 }
 
@@ -102,6 +105,7 @@ document.addEventListener("keyup", keyUpHandler);
 
 
 function draw() {
+
     pong.players[0].draw();
     pong.players[1].draw();
     drawObstacle();
@@ -138,18 +142,16 @@ function calculateScore() {
     if (ball.x + ball.radius < 0) {
         pong.players[1].score++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        alert("Player 2 win !");
-        wait(1000);
         setPositions();
+        pong.pause = !pong.pause;
+
 
     }
     if (ball.x - ball.radius > canvas.width) {
         pong.players[0].score++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        alert("Player 1 win !");
-        wait(1000);
         setPositions();
-
+        pong.pause = !pong.pause;
     }
 
 }
@@ -170,18 +172,28 @@ function displayScore() {
     ctx.fillText(pong.players[1].name + " : " + pong.players[1].score, canvas.width - 100, 100);
 }
 
+function displayPause() {
+        ctx.font = "40px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("press space to continue", canvas.width / 2, canvas.height / 2);
+}
+
 
 function play() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    draw();
-    moveElements();
-    calculateScore();
-    displayScore();
-    requestAnimationFrame(play);
-    let faster = setTimeout(increaseVelocity, 5000);
-    if (ball.vx > 10 || ball.vy > 10) {
-        clearTimeout(faster);
+    if (!pong.pause) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        draw();
+        moveElements();
+        calculateScore();
+        displayScore();
+        requestAnimationFrame(play);
+        let faster = setTimeout(increaseVelocity, 5000);
+        if (ball.vx > 10 || ball.vy > 10) {
+            clearTimeout(faster);
 
+        }
+    } else {
+        displayPause();
     }
 }
 function increaseVelocity() {
