@@ -53,6 +53,14 @@ function isBallPaddleColliding(paddle,ball){
 }
 
 
+function isBallObstacleColliding(obstacle,ball){
+    let dx=ball.x-obstacle.x;
+    let dy=ball.y-obstacle.y;
+    let rSum=obstacle.radius+ball.radius;
+    return(dx*dx+dy*dy<=rSum*rSum);
+}
+
+
 function keyDownHandler(e) {
     if (e.key === 'a') {
         pong.players[0].keyUp = true;
@@ -97,6 +105,7 @@ document.addEventListener("keyup", keyUpHandler);
 function draw() {
     pong.players[0].draw();
     pong.players[1].draw();
+    drawObstacle();
     drawBall();
 }
 
@@ -112,13 +121,17 @@ function moveElements() {
         if (isBallPaddleColliding(pong.players[i], ball)) {
             ball.vx = -ball.vx;
             if (pong.players[i].keyUp) {
-                ball.vy--; }
+                ball.vy--;
+            }
             if (pong.players[i].keyDown) {
-                ball.vy++; }
+                ball.vy++;
+            }
         }
-
     }
+        if (isBallObstacleColliding(ball, obstacle)) {
+            ball.vy = -ball.vy;
 
+        }
 }
 
 
