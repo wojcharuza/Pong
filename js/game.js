@@ -98,6 +98,7 @@ function draw() {
     pong.players[0].draw();
     pong.players[1].draw();
     drawBall();
+
 }
 
 function moveElements() {
@@ -127,9 +128,16 @@ function play() {
     draw();
     moveElements();
     requestAnimationFrame(play);
+    let faster  = setTimeout(increaseVelocity,5000);
+    if (ball.vx > 10 || ball.vy > 10){
+        clearTimeout(faster)
+    }
 }
 
-
+function increaseVelocity() {
+    ball.vy = ball.vy + (0.001 * ball.vy);
+    ball.vx = ball.vx + (0.001 * ball.vx);
+}
 
 
 
