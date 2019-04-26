@@ -1,4 +1,5 @@
-
+var thumbImg = document.createElement('img');
+thumbImg.src = 'images/planet2.png';
 
 
 function generateVelocity() {
@@ -9,18 +10,24 @@ function generateVelocity() {
     return vx;
 }
 
+
 var obstacle = {
     x: canvas.width/2,
     y: canvas.height/9,
     vy: generateVelocity(),
     radius: 60,
-    color: 'yellow',
     draw: function() {
+        ctx.save();
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         ctx.closePath();
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        ctx.clip();
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+        ctx.drawImage(thumbImg, 0, 0, this.x*2, this.y*2);
+        ctx.closePath();
+        ctx.restore();
     }
 };
 
