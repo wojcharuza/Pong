@@ -3,7 +3,7 @@
 function generateVelocity() {
     var vx = 0;
     while (vx < 3 && vx > -3) {
-        vx = Math.floor(Math.random() * (20) - 10);
+        vx = Math.floor(Math.random() * (10) - 5);
     }
     return vx;
 }
