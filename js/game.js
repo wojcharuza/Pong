@@ -124,12 +124,15 @@ function moveElements() {
         }
         if (isBallPaddleColliding(pong.players[i], ball)) {
             ball.vx = -ball.vx;
-            if (pong.players[i].keyUp) {
-                ball.vy = ball.vy-5;
+            if (pong.players[i].keyUp || pong.players[i].keyDown) {
+                if(ball.vy > 0){
+                    ball.vy -= 2;
+                }
+                else{
+                    ball.vy += 2;
+                }
             }
-            if (pong.players[i].keyDown) {
-                ball.vy = ball.vy+5;
-            }
+
         }
     }
     if (isBallObstacleColliding(ball, obstacle)) {
@@ -189,7 +192,7 @@ function play() {
         displayScore();
         requestAnimationFrame(play);
         let faster = setTimeout(increaseVelocity, 5000);
-        if (ball.vx > 10 || ball.vy > 10) {
+        if (ball.vx > 5 || ball.vy > 5) {
             clearTimeout(faster);
 
         }

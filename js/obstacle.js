@@ -2,19 +2,13 @@ var thumbImg = document.createElement('img');
 thumbImg.src = 'images/planet2.png';
 
 
-function generateVelocity() {
-    var vx = 0;
-    while (vx < 3 && vx > -3) {
-        vx = Math.floor(Math.random() * (20) - 10);
-    }
-    return vx;
-}
+
 
 
 var obstacle = {
     x: canvas.width/2,
     y: canvas.height/9,
-    vy: generateVelocity(),
+    vy: 5,
     radius: 60,
     draw: function() {
         ctx.save();
